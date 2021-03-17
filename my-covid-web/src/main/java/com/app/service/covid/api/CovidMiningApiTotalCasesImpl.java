@@ -37,7 +37,7 @@ public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 	@Override
 	public List<CovidCasesArea> getLast5RecordsMY() throws Exception {
 		// TODO Auto-generated method stub
-		List<CovidCasesAreaEntity> casesEntities = covidCasesRepository.listLast5Records();
+		List<CovidCasesAreaEntity> casesEntities = covidCasesRepository.listLast5RecordsHQL();
 
 		CovidCasesAreaMapper mapper = Selma.builder(CovidCasesAreaMapper.class).build();
 
