@@ -8,8 +8,6 @@ public interface CovidMiningAPITotalCases {
 
 	// String getTotalCasesMY() throws Exception;
 
-	String doMining() throws Exception;
-	
 	List<CovidCasesArea> getLast5RecordsMY() throws Exception;
 
 	String getTotalfromDB() throws Exception;
