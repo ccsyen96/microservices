@@ -11,4 +11,7 @@ public interface CovidMiningAPITotalCases {
 	List<CovidCasesArea> getLast5RecordsMY() throws Exception;
 
 	String getTotalfromDB() throws Exception;
+
+	List<CovidCasesArea> getLast5RecordsMYWithSize(int size) throws Exception;
+	
 }
