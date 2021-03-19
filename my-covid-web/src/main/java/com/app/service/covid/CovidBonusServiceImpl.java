@@ -41,11 +41,11 @@ public class CovidBonusServiceImpl implements CovidBonusService {
 			for (CovidCasesBonusEntity entity : covidCaseBonusEntities) {
 				CovidCasesBonus model = mapper.asResource(entity);
 				covidCasesBonusList.add(model);
-				log.info("entity total bonus={}", entity.getDescription());
+				log.info("entity description={}", entity.getDescription());
 			}
 			log.info(" getCovidBonus() return Size={}", covidCaseBonusEntities.size());
 		}
-
+		log.info("bonus() ended-->covidCasesBonusList", covidCasesBonusList);
 		return covidCasesBonusList;
 
 	}
