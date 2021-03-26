@@ -5,15 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.entity.CovidCasesDescEntity;
+import com.app.mapper.CovidAreaDescMapper;
 import com.app.model.CovidCasesArea;
 import com.app.model.CovidCasesDesc;
 import com.app.service.covid.CovidService;
 import com.app.service.covid.CovidServiceImpl;
 import com.app.service.covid.api.CovidMiningAPITotalCases;
+import com.app.repository.covid.CovidCasesDescRepository;
 
+import fr.xebia.extras.selma.Selma;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -33,6 +40,13 @@ public class CovidController {
 	private final static String GET_HELLO_API = "/covid/hello";
 
 	private final static String GET_LOG_API = "/covid/logging";
+	
+	private final static String PUT_API = "/covid/put";
+	
+	private final static String POST_API = "/covid/post";
+	
+	@Autowired
+	private CovidCasesDescRepository covidCasesDescRepository;
 
 	@Autowired
 	private CovidService covidService;
@@ -152,5 +166,40 @@ public class CovidController {
 //		
 //		return rtn;
 		return covidServiceImp.deleteCovid(id);
+	}
+	// TODO: Angular Practical 7 - Full Stack Application for Covid Put HTTP
+	@PutMapping(PUT_API)
+	CovidCasesDesc putCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws RuntimeException {
+		log.info("putCovid() started, covidCasesDesc={}", covidCasesDesc);
+
+		// complete the implementation below
+		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
+		
+		CovidCasesDescEntity covidAreaDescEntity=mapper.asEntity(covidCasesDesc);
+		CovidCasesDescEntity savedEntity=covidCasesDescRepository.save(covidAreaDescEntity);
+		
+		covidCasesDesc = mapper.asResource(savedEntity);
+		
+		log.info("putCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
+		
+		// return should be the Saved CovidCasesDesc with values
+		return covidCasesDesc;
+	}
+	@PostMapping(POST_API)
+	CovidCasesDesc postCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws RuntimeException {
+		log.info("postCovid() started, covidCasesDesc={}", covidCasesDesc);
+
+		// complete the implementation below
+		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
+		
+		CovidCasesDescEntity covidAreaDescEntity=mapper.asEntity(covidCasesDesc);
+		CovidCasesDescEntity savedEntity=covidCasesDescRepository.save(covidAreaDescEntity);
+		
+		covidCasesDesc = mapper.asResource(savedEntity);
+		
+		log.info("postCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
+		
+		// return should be the Saved CovidCasesDesc with values
+		return covidCasesDesc;
 	}
 }
