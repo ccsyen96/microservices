@@ -11,16 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.entity.CovidCasesDescEntity;
-import com.app.mapper.CovidAreaDescMapper;
 import com.app.model.CovidCasesArea;
 import com.app.model.CovidCasesDesc;
 import com.app.service.covid.CovidService;
-import com.app.service.covid.CovidServiceImpl;
 import com.app.service.covid.api.CovidMiningAPITotalCases;
-import com.app.repository.covid.CovidCasesDescRepository;
 
-import fr.xebia.extras.selma.Selma;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -45,14 +40,10 @@ public class CovidController {
 	
 	private final static String POST_API = "/covid/post";
 	
-	@Autowired
-	private CovidCasesDescRepository covidCasesDescRepository;
+	private final static String DELETE_COVID_SOAPUI = "/covid/delete/soap";
 
 	@Autowired
 	private CovidService covidService;
-	
-	@Autowired
-	private CovidServiceImpl covidServiceImp;
 
 	@Autowired
 	CovidMiningAPITotalCases covidMiningAPITotalCases;
@@ -65,7 +56,7 @@ public class CovidController {
 		try {
 			returnString = covidMiningAPITotalCases.getTotalfromDB();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			log.error(" getLatest() exception " + e.getMessage());
 			throw new Exception(e.getMessage());
 		}
@@ -81,7 +72,7 @@ public class CovidController {
 		try {
 			covidCasesdescs = covidService.getCovidDesc();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			log.error(" findAll() exception " + e.getMessage());
 			throw new Exception(e.getMessage());
 		}
@@ -97,7 +88,7 @@ public class CovidController {
 		try {
 			covidCasesAreas = covidService.getCovid();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			log.error(" findAll() exception " + e.getMessage());
 			throw new Exception(e.getMessage());
 		}
@@ -106,7 +97,7 @@ public class CovidController {
 		return covidCasesAreas;
 	}
 
-	// TODO: Practical 1 - Complete the API below
+	// Practical 1 - Complete the API below
 	// It should return hello when you hit http://localhost:8081/covid/hello on
 	// browser
 
@@ -117,7 +108,7 @@ public class CovidController {
 		return "Hello API";
 	}
 
-	// TODO: Practical 2 - Capture the error message below from log file
+	// Practical 2 - Capture the error message below from log file
 	// It should return some error when you pass a string as parameter to the HTTP
 	// get
 	// Example, http://localhost:8081/covid/hello?aNumberOnly=string
@@ -132,7 +123,7 @@ public class CovidController {
 		return "you have input =>" + aNumberOnly;
 	}
 
-	// TODO: Practical 4 (Add)
+	// Practical 4 (Add)
 	// Move the logic below under try/catch area to CovidServiceImpl
 	// check out the remarks of "TODO: Practical 4 " on CovidServiceImpl
 	@GetMapping(ADD_COVID)
@@ -155,51 +146,56 @@ public class CovidController {
 		return covidCasesDesc;
 	}
 
-	// TODO: Practical 4 (Delete)
+	// Practical 4 (Delete)
 	// Move the logic below under try/catch area to CovidServiceImpl
 	// check out the remarks of "TODO: Practical 4 " on CovidServiceImpl
 	@DeleteMapping(DELETE_COVID)
 	int deleteCovid(@RequestParam(required = true) long id) throws Exception {
 		log.info("deleteCovid() started id={}", id);
-//		int rtn = 0;
-//		rtn=covidServiceImp.deleteCovid(id);
-//		
-//		return rtn;
-		return covidServiceImp.deleteCovid(id);
-	}
-	// TODO: Angular Practical 7 - Full Stack Application for Covid Put HTTP
-	@PutMapping(PUT_API)
-	CovidCasesDesc putCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws RuntimeException {
-		log.info("putCovid() started, covidCasesDesc={}", covidCasesDesc);
 
-		// complete the implementation below
-		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
+		return covidService.deleteCovid(id);
+	}
+	// Angular Practical 7 - Full Stack Application for Covid Put HTTP
+	@PutMapping(PUT_API)
+	CovidCasesDesc putCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws Exception {
+//		log.info("putCovid() started, covidCasesDesc={}", covidCasesDesc);
+//		try {
+//
+//			if (covidCasesDesc == null || covidCasesDesc.equals("undefined") || covidCasesDesc.equals(""))  {
+//				throw new NullPointerException(PUT_API + ", desc is null or empty");
+//			}
+//			covidCasesDesc=covidService.putCovid(covidCasesDesc);
+//		} catch (Exception e) {
+//			// Auto-generated catch block
+//			log.error("putCovid() exception " + e.getMessage());
+//			throw new Exception(e.getMessage());
+//		}
 		
-		CovidCasesDescEntity covidAreaDescEntity=mapper.asEntity(covidCasesDesc);
-		CovidCasesDescEntity savedEntity=covidCasesDescRepository.save(covidAreaDescEntity);
-		
-		covidCasesDesc = mapper.asResource(savedEntity);
-		
-		log.info("putCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
+//		log.info("putCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
 		
 		// return should be the Saved CovidCasesDesc with values
-		return covidCasesDesc;
+		return covidService.putCovid(covidCasesDesc);
 	}
 	@PostMapping(POST_API)
 	CovidCasesDesc postCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws RuntimeException {
 		log.info("postCovid() started, covidCasesDesc={}", covidCasesDesc);
 
-		// complete the implementation below
-		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
+
 		
-		CovidCasesDescEntity covidAreaDescEntity=mapper.asEntity(covidCasesDesc);
-		CovidCasesDescEntity savedEntity=covidCasesDescRepository.save(covidAreaDescEntity);
-		
-		covidCasesDesc = mapper.asResource(savedEntity);
-		
-		log.info("postCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
+		//log.info("postCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
 		
 		// return should be the Saved CovidCasesDesc with values
-		return covidCasesDesc;
+		return covidService.postCovid(covidCasesDesc);
+	}
+	// Performance Practical 2 - Performance and Functional Testing
+	@DeleteMapping(DELETE_COVID_SOAPUI)
+
+	List<CovidCasesDesc> deleteCovidSoap(@RequestParam(required = true) String desc) throws Exception {
+		log.info("deleteCovidSoap() started desc={}", desc);
+		
+		// complete the implementation below
+		
+		//log.info("deleteCovidSoap() ended");
+		return covidService.deleteCovidDesc(desc);
 	}
 }

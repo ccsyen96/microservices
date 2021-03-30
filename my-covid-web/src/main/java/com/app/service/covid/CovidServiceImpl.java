@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.app.entity.CovidCasesAreaEntity;
 import com.app.entity.CovidCasesDescEntity;
@@ -23,7 +24,8 @@ import fr.xebia.extras.selma.Selma;
 
 public class CovidServiceImpl implements CovidService {
 
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CovidServiceImpl.class);
+	private static final org.slf4j.Logger 
+	log = org.slf4j.LoggerFactory.getLogger(CovidServiceImpl.class);
 
 	@Autowired
 	CovidCasesRepository covidCasesRepository;
@@ -92,6 +94,7 @@ public class CovidServiceImpl implements CovidService {
 	 }
 
 	// TODO: Related to Practical 4 (Delete)
+	@Override
 	public int deleteCovid(long id) throws Exception {
 		log.info("deleteCovid started");
 
@@ -114,6 +117,67 @@ public class CovidServiceImpl implements CovidService {
 		}
 
 		return 0;
+
+	}
+	
+	
+	@Override
+	public CovidCasesDesc putCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws RuntimeException {
+		log.info("putCovid() started, covidCasesDesc={}", covidCasesDesc);
+
+		// complete the implementation below
+		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
+		
+		CovidCasesDescEntity covidAreaDescEntity=mapper.asEntity(covidCasesDesc);
+		CovidCasesDescEntity savedEntity=covidCasesDescRepository.save(covidAreaDescEntity);
+		
+		covidCasesDesc = mapper.asResource(savedEntity);
+		
+		log.info("putCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
+		
+		// return should be the Saved CovidCasesDesc with values
+		return covidCasesDesc;
+	}
+
+	
+	@Override
+	public CovidCasesDesc postCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws RuntimeException {
+		log.info("postCovid() started, covidCasesDesc={}", covidCasesDesc);
+
+		// complete the implementation below
+		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
+		
+		CovidCasesDescEntity covidAreaDescEntity=mapper.asEntity(covidCasesDesc);
+		CovidCasesDescEntity savedEntity=covidCasesDescRepository.save(covidAreaDescEntity);
+		
+		covidCasesDesc = mapper.asResource(savedEntity);
+		
+		log.info("postCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
+		
+		// return should be the Saved CovidCasesDesc with values
+		return covidCasesDesc;
+	}
+	
+	@Override
+	public List<CovidCasesDesc> deleteCovidDesc(String desc) {
+		log.info("deleteCovidDesc started desc={}", desc);
+		covidCasesDescRepository.deleteDescWithCondition(desc);
+		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
+		List<CovidCasesDescEntity> covidCaseDescEntities = covidCasesDescRepository.findAll();
+		List<CovidCasesDesc> covidCasesDescList = new ArrayList<CovidCasesDesc>();
+		if (covidCaseDescEntities == null) {
+			throw new IDNotFoundException(0L);
+		} else {
+
+			for (CovidCasesDescEntity entity : covidCaseDescEntities) {
+				CovidCasesDesc model = mapper.asResource(entity);
+				covidCasesDescList.add(model);
+				log.info("entity total desc={}", entity.getDescription());
+			}
+			log.info(" getCovidDesc() return Size={}", covidCaseDescEntities.size());
+		}
+
+		return covidCasesDescList;
 
 	}
 }
