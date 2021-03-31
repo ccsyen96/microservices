@@ -190,9 +190,9 @@ public class CovidServiceImpl implements CovidService {
 		List<String> erase = covidCasesDescRepository.findDuplicateNdelete();
 				
 		for (String duplicated: erase) {
-			log.info ("Duplicate value found on Description Table---> " + duplicated);
+			log.info ("Duplicate Value Founded on Covid Table Description ---> " + duplicated);
 			covidCasesDescRepository.deleteDescWithCondition(duplicated);
-			log.info ("Value Deleted---> " + duplicated);
+			log.info ("Value Deleted ---> " + duplicated);
 		}
 		
 		log.info("findDuplicateNdelete() ended");

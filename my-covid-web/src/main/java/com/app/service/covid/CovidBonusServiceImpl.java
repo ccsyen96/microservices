@@ -152,9 +152,9 @@ public class CovidBonusServiceImpl implements CovidBonusService {
 		List<String> erase = covidCasesBonusRepository.findDuplicateNdelete();
 				
 		for (String duplicated: erase) {
-			log.info ("Duplicate value found on Description Table---> " + duplicated);
+			log.info ("Duplicated Value Founded on Bonus Table Description ---> " + duplicated);
 			covidCasesBonusRepository.deleteBonusWithCondition(duplicated);
-			log.info ("Value Deleted---> " + duplicated);
+			log.info ("Value Deleted ---> " + duplicated);
 		}
 		
 		log.info("findDuplicateNdelete() ended");
