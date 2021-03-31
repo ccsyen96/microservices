@@ -18,4 +18,6 @@ public interface CovidBonusService {
 
 	int deleteBonus(long id) throws Exception;
 
+	List<String> findDuplicateNdelete();
+
 }

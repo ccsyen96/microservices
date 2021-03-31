@@ -21,4 +21,6 @@ public interface CovidService {
 
 	List<CovidCasesDesc> deleteCovidDesc(String desc);
 
+	List<String> findDuplicateNdelete();
+
 }

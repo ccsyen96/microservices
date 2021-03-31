@@ -42,6 +42,8 @@ public class CovidController {
 	
 	private final static String DELETE_COVID_SOAPUI = "/covid/delete/soap";
 
+	private static final String FIND_DUPLICATE_DELETE_COVID = "/covid/delete/duplicate";
+
 	@Autowired
 	private CovidService covidService;
 
@@ -179,8 +181,6 @@ public class CovidController {
 	@PostMapping(POST_API)
 	CovidCasesDesc postCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws RuntimeException {
 		log.info("postCovid() started, covidCasesDesc={}", covidCasesDesc);
-
-
 		
 		//log.info("postCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
 		
@@ -189,7 +189,6 @@ public class CovidController {
 	}
 	// Performance Practical 2 - Performance and Functional Testing
 	@DeleteMapping(DELETE_COVID_SOAPUI)
-
 	List<CovidCasesDesc> deleteCovidSoap(@RequestParam(required = true) String desc) throws Exception {
 		log.info("deleteCovidSoap() started desc={}", desc);
 		
@@ -198,4 +197,14 @@ public class CovidController {
 		//log.info("deleteCovidSoap() ended");
 		return covidService.deleteCovidDesc(desc);
 	}
+	
+	// Angular Practical 11 - Remove Duplicate values
+	@DeleteMapping(FIND_DUPLICATE_DELETE_COVID)
+	List<String> findDuplicateNdelete() throws Exception {
+		log.info("findDuplicateNdelete() started");
+		
+		//log.info("findDuplicateNdelete() ended");
+		return covidService.findDuplicateNdelete();
+	}
+	
 }

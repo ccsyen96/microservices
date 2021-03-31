@@ -1,5 +1,7 @@
 package com.app.repository.covid;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,5 +21,8 @@ public interface CovidCasesBonusRepository extends JpaRepository<CovidCasesBonus
 	@Query("DELETE  FROM CovidCasesBonusEntity d WHERE d.description = :bonus")
 	void deleteBonusWithCondition(String bonus);
 
+	// JPQL for duplication
+	@Query("SELECT description FROM CovidCasesBonusEntity d GROUP BY description HAVING COUNT(*)>1 ")
+	List<String> findDuplicateNdelete();
 
 }

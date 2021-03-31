@@ -143,4 +143,21 @@ public class CovidBonusServiceImpl implements CovidBonusService {
 
 		return 0;
 	}
+	@Override
+	public List<String> findDuplicateNdelete() {
+		log.info("findDuplicateNdelete() started");
+		
+		// complete the implementation below
+		// ensure logic related to repo move to service implementation
+		List<String> erase = covidCasesBonusRepository.findDuplicateNdelete();
+				
+		for (String duplicated: erase) {
+			log.info ("Duplicate value found on Description Table---> " + duplicated);
+			covidCasesBonusRepository.deleteBonusWithCondition(duplicated);
+			log.info ("Value Deleted---> " + duplicated);
+		}
+		
+		log.info("findDuplicateNdelete() ended");
+		return erase;
+	}
 }

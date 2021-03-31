@@ -32,6 +32,8 @@ public class CovidBonusController {
 	
 	private final static String DELETE_BONUS_SOAPUI = "/bonus/delete/soap";
 
+	private static final String FIND_DUPLICATE_DELETE_COVID = "/bonus/delete/duplicate";
+
 	@Autowired
 	private CovidBonusService covidBonusService;
 
@@ -123,6 +125,15 @@ public class CovidBonusController {
 		log.info("deleteBonusSoap() started desc={}", bonus);
 
 		return covidBonusService.deleteBonusDesc(bonus);
+	}
+	
+	// Angular Practical 11 - Remove Duplicate values
+	@DeleteMapping(FIND_DUPLICATE_DELETE_COVID)
+	List<String> findDuplicateNdelete() throws Exception {
+		log.info("findDuplicateNdelete() started");
+		
+		//log.info("findDuplicateNdelete() ended");
+		return covidBonusService.findDuplicateNdelete();
 	}
 
 }
