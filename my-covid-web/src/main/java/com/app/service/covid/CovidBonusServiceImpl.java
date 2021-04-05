@@ -16,7 +16,7 @@ import com.app.repository.covid.CovidCasesBonusRepository;
 
 import fr.xebia.extras.selma.Selma;
 
-//TODO: Practical bonus final
+//Practical bonus final
 //complete this as Dependencies Injection Service
 @Service
 
@@ -31,12 +31,11 @@ public class CovidBonusServiceImpl implements CovidBonusService {
 	// the method is similar to getCovidDesc() CovidServiceImpl file
 	
 	@Override
-	public
-	List<CovidCasesBonus> bonus() throws Exception {
+	public List<CovidCasesBonus> bonus() {
 		log.info("bonus() started");
 		CovidAreaBonusMapper mapper = Selma.builder(CovidAreaBonusMapper.class).build();
 		List<CovidCasesBonusEntity> covidCaseBonusEntities = covidCasesBonusRepository.findAll();
-		List<CovidCasesBonus> covidCasesBonusList = new ArrayList<CovidCasesBonus>();
+		List<CovidCasesBonus> covidCasesBonusList = new ArrayList<>();
 		if (covidCaseBonusEntities == null) {
 			throw new IDNotFoundException(0L);
 		} else {
@@ -48,12 +47,12 @@ public class CovidBonusServiceImpl implements CovidBonusService {
 			}
 			log.info(" getCovidBonus() return Size={}", covidCaseBonusEntities.size());
 		}
-		log.info("bonus() ended-->covidCasesBonusList", covidCasesBonusList);
+		log.info("bonus() ended --> covidCasesBonusList{}", covidCasesBonusList);
 		return covidCasesBonusList;
 
 	}
 	@Override
-	public CovidCasesBonus putBonus(@RequestBody CovidCasesBonus covidCasesBonus)throws RuntimeException {
+	public CovidCasesBonus putBonus(@RequestBody CovidCasesBonus covidCasesBonus){
 		log.info("putBonus() started, covidCasesBonus={}", covidCasesBonus);
 
 		CovidAreaBonusMapper mapper = Selma.builder(CovidAreaBonusMapper.class).build();
@@ -69,7 +68,7 @@ public class CovidBonusServiceImpl implements CovidBonusService {
 	}
 	
 	@Override
-	public CovidCasesBonus postBonus(@RequestBody CovidCasesBonus covidCasesBonus)throws RuntimeException {
+	public CovidCasesBonus postBonus(@RequestBody CovidCasesBonus covidCasesBonus){
 		log.info("postBonus() started, covidCasesBonus={}", covidCasesBonus);
 
 		CovidAreaBonusMapper mapper = Selma.builder(CovidAreaBonusMapper.class).build();
@@ -84,25 +83,14 @@ public class CovidBonusServiceImpl implements CovidBonusService {
 		return covidCasesBonus;
 	}
 	@Override
-	public List<CovidCasesBonus> deleteBonusDesc(String bonus) {
+	public int deleteBonusDesc(String bonus) {
 		log.info("deleteCovidDesc started desc={}", bonus);
-		covidCasesBonusRepository.deleteBonusWithCondition(bonus);
-		CovidAreaBonusMapper mapper = Selma.builder(CovidAreaBonusMapper.class).build();
-		List<CovidCasesBonusEntity> covidCaseBonusEntities = covidCasesBonusRepository.findAll();
-		List<CovidCasesBonus> covidCasesBonusList = new ArrayList<CovidCasesBonus>();
-		if (covidCaseBonusEntities == null) {
-			throw new IDNotFoundException(0L);
-		} else {
-
-			for (CovidCasesBonusEntity entity : covidCaseBonusEntities) {
-				CovidCasesBonus model = mapper.asResource(entity);
-				covidCasesBonusList.add(model);
-				log.info("entity total bonus={}", entity.getDescription());
-			}
-			log.info(" getCovidBonus() return Size={}", covidCaseBonusEntities.size());
-		}
-
-		return covidCasesBonusList;
+		// complete the implementation below
+		
+		int deleted = covidCasesBonusRepository.deleteBonusWithCondition(bonus);
+		
+		log.info("deleteBonusDesc() ended deleted={}", deleted);
+		return deleted;
 
 	}
 
@@ -120,26 +108,19 @@ public class CovidBonusServiceImpl implements CovidBonusService {
 		return covidCasesBonus;
 	}
 	@Override
-	public int deleteBonus(long id) throws Exception {
+	public int deleteBonus(long id){
+		
 		log.info("deleteBonus started");
-
-		try {
 
 			Optional<CovidCasesBonusEntity> entityOptional = covidCasesBonusRepository.findById(id);
 
-			log.info("Entity found == " + entityOptional.isPresent());
+			log.info("Entity found == {}", entityOptional.isPresent());
 
 			if (entityOptional.isPresent()) {
 				CovidCasesBonusEntity covidAreaBonusEntity = entityOptional.get();
 				covidCasesBonusRepository.delete(covidAreaBonusEntity);
 				return 1;
 			}
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			log.error("deleteBonus() exception " + e.getMessage());
-			throw new Exception(e.getMessage());
-		}
 
 		return 0;
 	}
@@ -152,9 +133,9 @@ public class CovidBonusServiceImpl implements CovidBonusService {
 		List<String> erase = covidCasesBonusRepository.findDuplicateNdelete();
 				
 		for (String duplicated: erase) {
-			log.info ("Duplicated Value Founded on Bonus Table Description ---> " + duplicated);
+			log.info ("Duplicated Value Founded on Bonus Table Description ---> {}", duplicated);
 			covidCasesBonusRepository.deleteBonusWithCondition(duplicated);
-			log.info ("Value Deleted ---> " + duplicated);
+			log.info ("Value Deleted ---> {}", duplicated);
 		}
 		
 		log.info("findDuplicateNdelete() ended");

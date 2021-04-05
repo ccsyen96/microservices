@@ -11,7 +11,7 @@ import com.app.entity.CovidCasesAreaEntity;
 
 public interface CovidCasesRepository extends JpaRepository<CovidCasesAreaEntity, UUID>  {
 	
-	// TODO: Practical Bonus 2
+	// Practical Bonus 2
 	//Native SQL Query
 	@Query(value = "SELECT DISTINCT c.date, c.cases, c.id, c.fk_area_id FROM trx_covid_cases AS c order by date desc LIMIT 2", nativeQuery = true)
 	List<CovidCasesAreaEntity> listLast2Records();
@@ -20,7 +20,7 @@ public interface CovidCasesRepository extends JpaRepository<CovidCasesAreaEntity
 	@Query("SELECT m FROM CovidCasesAreaEntity AS m order by date desc")
 	List<CovidCasesAreaEntity> listLast5RecordsHQL();
 	
-	// TODO: Practical Bonus 3
+	// Practical Bonus 3
 	@Query("SELECT m FROM CovidCasesAreaEntity AS m order by date desc")
 	List<CovidCasesAreaEntity> listLast5RecordsHQLWithSize(Pageable pageable);
 }

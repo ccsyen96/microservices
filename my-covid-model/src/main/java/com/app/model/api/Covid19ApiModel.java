@@ -11,8 +11,6 @@ import lombok.Setter;
 public class Covid19ApiModel {
 
 	public String Country;
-
-	public String Date;
-	
+	public String Date;	
 	public int Cases;
 }

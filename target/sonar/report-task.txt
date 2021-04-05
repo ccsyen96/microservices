@@ -1,0 +1,6 @@
+projectKey=ccsyen96-java
+serverUrl=http://139.99.33.99:9000
+serverVersion=8.7.0.41497
+dashboardUrl=http://139.99.33.99:9000/dashboard?id=ccsyen96-java
+ceTaskId=AXigvI5wvpgu-OZZN2jG
+ceTaskUrl=http://139.99.33.99:9000/api/ce/task?id=AXigvI5wvpgu-OZZN2jG

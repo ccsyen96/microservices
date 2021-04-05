@@ -13,14 +13,14 @@ public interface CovidService {
 
 	CovidCasesDesc addCovid(String desc);
 
-	int deleteCovid(long id) throws Exception;
+	int deleteCovid(long id);
 
-	CovidCasesDesc putCovid(CovidCasesDesc covidCasesDesc) throws RuntimeException;
+	CovidCasesDesc putCovid(CovidCasesDesc covidCasesDesc);
 
-	CovidCasesDesc postCovid(CovidCasesDesc covidCasesDesc) throws RuntimeException;
-
-	List<CovidCasesDesc> deleteCovidDesc(String desc);
+	CovidCasesDesc postCovid(CovidCasesDesc covidCasesDesc);
 
 	List<String> findDuplicateNdelete();
+
+	int deleteCovidSoap(String desc);
 
 }

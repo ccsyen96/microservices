@@ -7,6 +7,11 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class DateTools {
+	
+	private DateTools()
+	{
+		throw new IllegalStateException("Utility class");
+	}
 
 	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DateTools.class);
 

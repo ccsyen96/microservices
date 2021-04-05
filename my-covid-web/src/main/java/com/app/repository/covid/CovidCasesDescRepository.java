@@ -15,8 +15,8 @@ public interface CovidCasesDescRepository  extends JpaRepository<CovidCasesDescE
 	// @transactional and modifying annotation need to be added 
 	@Transactional
 	@Modifying
-	@Query("DELETE  FROM CovidCasesDescEntity d WHERE d.description = :desc")
-	void deleteDescWithCondition(String desc);
+	@Query("DELETE FROM CovidCasesDescEntity d WHERE d.description = :desc")
+	int deleteDescWithCondition(String desc);
 	
 	// Complete the JPQL below
 	@Query("SELECT description FROM CovidCasesDescEntity d GROUP BY description HAVING COUNT(*)>1 ")

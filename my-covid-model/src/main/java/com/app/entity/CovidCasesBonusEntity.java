@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-//TODO: Practical bonus final
+//Practical bonus final
 //complete this as new CovidCasesBonusEntity
 
 @Entity

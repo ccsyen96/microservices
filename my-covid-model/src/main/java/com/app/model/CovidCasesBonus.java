@@ -1,6 +1,6 @@
 package com.app.model;
 
-//TODO: Practical bonus final
+//Practical bonus final
 //complete this to usable POJO 
 import lombok.Getter;
 import lombok.Setter;
